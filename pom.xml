@@ -98,6 +98,8 @@
                 <artifactId>dysmsapi20170525</artifactId>
                 <version>${aliyun.sms.version}</version>
             </dependency>
+
+
         </dependencies>
     </dependencyManagement>
 </project>
