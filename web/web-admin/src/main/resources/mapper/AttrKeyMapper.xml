@@ -4,4 +4,35 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.atguigu.lease.web.admin.mapper.AttrKeyMapper">
 
+    <!--数据库映射-->
+    <resultMap id="AttrKeyVoMap" type="com.atguigu.lease.web.admin.vo.attr.AttrKeyVo">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+            <!--集合字段映射-->
+        <collection property="attrValueList" ofType="com.atguigu.lease.web.admin.vo.attr.AttrValueVo">
+            <id column="attr_value_id" property="id"/>
+            <result column="attr_value_name" property="name"/>
+            <result column="attr_key_id" property="attrKeyId"/>
+
+        </collection>
+    </resultMap>
+
+    <select id="listAttrInfo" resultMap="AttrKeyVoMap">
+        select k.id,
+               k.name,
+               v.id attr_value_id,
+               v.name attr_value_name,
+               v.attr_key_id
+        from attr_key k
+        /*
+        join内连接：显示所有属性key和属性value
+        left：显示所有属性key，没有属性value的
+        */
+                left join attr_value v
+                      on k.id = v.attr_key_id
+                    and v.is_deleted = 0
+        where k.is_deleted = 0
+
+
+    </select>
 </mapper>

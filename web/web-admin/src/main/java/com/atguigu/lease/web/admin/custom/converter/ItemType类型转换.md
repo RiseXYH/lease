@@ -1,0 +1,1 @@
+WebMvcConfiguration文件调用StringToItemTypeConverter方法进行类型转换
