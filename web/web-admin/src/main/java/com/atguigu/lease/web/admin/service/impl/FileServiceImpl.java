@@ -3,10 +3,14 @@ package com.atguigu.lease.web.admin.service.impl;
 import com.atguigu.lease.common.minio.MinioProperties;
 import com.atguigu.lease.web.admin.service.FileService;
 import io.minio.*;
+import io.minio.errors.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
@@ -20,9 +24,8 @@ public class FileServiceImpl implements FileService {
     private MinioClient client;
 
     @Override
-    public String upload(MultipartFile file) {
+    public String upload(MultipartFile file) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
 
-        try {
             boolean bucketExists = client.bucketExists(BucketExistsArgs.builder().bucket(properties.getBucketName()).build());
             if (!bucketExists) {
                 client.makeBucket(MakeBucketArgs.builder().bucket(properties.getBucketName()).build());
@@ -42,10 +45,7 @@ public class FileServiceImpl implements FileService {
 
             return String.join("/", properties.getEndpoint(), properties.getBucketName(), filename);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+
     }
 
     private String createBucketPolicyConfig(String bucketName) {
