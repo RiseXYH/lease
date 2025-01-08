@@ -4,9 +4,13 @@ import com.atguigu.lease.model.entity.*;
 import com.atguigu.lease.model.enums.ItemType;
 import com.atguigu.lease.web.admin.mapper.ApartmentInfoMapper;
 import com.atguigu.lease.web.admin.service.*;
+import com.atguigu.lease.web.admin.vo.apartment.ApartmentItemVo;
+import com.atguigu.lease.web.admin.vo.apartment.ApartmentQueryVo;
 import com.atguigu.lease.web.admin.vo.apartment.ApartmentSubmitVo;
 import com.atguigu.lease.web.admin.vo.graph.GraphVo;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.Builder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +28,15 @@ import java.util.List;
 @Service
 public class ApartmentInfoServiceImpl extends ServiceImpl<ApartmentInfoMapper, ApartmentInfo>
         implements ApartmentInfoService {
+//    注入mapper
+    @Autowired
+    private ApartmentInfoMapper apartmentInfoMapper;
     //    删除图片列表
     @Autowired
     private GraphInfoService graphInfoService;
     //    删除配套列表关系
     @Autowired
-    private ApartmentFacilityService apartmentInfoMapper;
+    private ApartmentFacilityService apartmentInfo;
     @Autowired
     private ApartmentLabelService apartmentLabelService;
 
@@ -52,7 +59,7 @@ public class ApartmentInfoServiceImpl extends ServiceImpl<ApartmentInfoMapper, A
 //            2.删除配套列表关系
             LambdaQueryWrapper<ApartmentFacility> facilityLambdaQueryWrapper = new LambdaQueryWrapper<>();
             facilityLambdaQueryWrapper.eq(ApartmentFacility::getApartmentId, apartmentSubmitVo.getId());
-            apartmentInfoMapper.remove(facilityLambdaQueryWrapper);
+            apartmentInfo.remove(facilityLambdaQueryWrapper);
 //            3.删除标签列表
             LambdaQueryWrapper<ApartmentLabel> lambdaQueryWrapper = new LambdaQueryWrapper<>();
             lambdaQueryWrapper.eq(ApartmentLabel::getApartmentId, apartmentSubmitVo.getId());
@@ -89,7 +96,7 @@ public class ApartmentInfoServiceImpl extends ServiceImpl<ApartmentInfoMapper, A
                 apartmentFacility.setFacilityId(facilityInfoId);
                 facility.add(apartmentFacility);
             }
-            apartmentInfoMapper.saveBatch(facility);
+            apartmentInfo.saveBatch(facility);
         }
         //3.插入标签列表
         List<Long> labelIds = apartmentSubmitVo.getLabelIds();
@@ -117,6 +124,14 @@ public class ApartmentInfoServiceImpl extends ServiceImpl<ApartmentInfoMapper, A
             }
             apartmentFeeValueService.saveBatch(apartmentFeeValueList);
         }
+    }
+
+
+/*分页查询方法*/
+@Override
+    public IPage<ApartmentItemVo> pageItem(Page<ApartmentItemVo> page, ApartmentQueryVo queryVo) {
+
+        return apartmentInfoMapper.pageItem(page, queryVo);
     }
 
 }
