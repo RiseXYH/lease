@@ -13,6 +13,12 @@ public class GlobalExceptionHandler {
     public Result handle(Exception e){
         e.printStackTrace();
         return Result.fail();
-
+    }
+//ctrl+h 查看继承树
+    @ExceptionHandler(LeaseException.class)
+    @ResponseBody
+    public Result handle(LeaseException e){
+        e.printStackTrace();
+        return Result.fail(e.getCode(),e.getMessage());
     }
 }

@@ -52,6 +52,7 @@ public class ApartmentController {
     @Operation(summary = "根据id删除公寓信息")
     @DeleteMapping("removeById")
     public Result removeById(@RequestParam Long id) {
+        service.removeApartmentById(id);
         return Result.ok();
     }
 
