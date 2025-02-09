@@ -20,4 +20,17 @@
         )
 
     </select>
+    <select id="selectListByRoomId" resultType="com.atguigu.lease.model.entity.FacilityInfo">
+        select id,
+               type,
+               name,
+               icon
+        from facility_info
+        where is_deleted = 0
+          and id in
+              (select facility_id
+               from room_facility
+               where is_deleted = 0
+                 and room_id = #{id})
+    </select>
 </mapper>

@@ -15,7 +15,13 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface RoomInfoService extends IService<RoomInfo> {
 
+//保存或更新房间信息
     void saveOrUpdateRoom(RoomSubmitVo roomSubmitVo);
 
+//根据条件分页查询房间列表
     IPage<RoomItemVo> pageRoomItemByQuery(IPage<RoomItemVo> page, RoomQueryVo queryVo);
+//根据id获取房间详细信息
+    RoomDetailVo getDetailById(Long id);
+//    根据id删除房间信息
+    void removeRoomById(Long id);
 }
