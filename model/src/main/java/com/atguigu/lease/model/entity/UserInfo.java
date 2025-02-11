@@ -22,7 +22,8 @@ public class UserInfo extends BaseEntity {
     private String phone;
 
     @Schema(description = "密码")
-    @TableField(value = "password")
+    //不查询密码
+    @TableField(value = "password",exist = false)
     private String password;
 
     @Schema(description = "头像url")
