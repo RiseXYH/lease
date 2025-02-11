@@ -41,6 +41,7 @@ public class ViewAppointmentController {
         updateWrapper.set(ViewAppointment::getAppointmentStatus, status);
         service.update(updateWrapper);
         return Result.ok();
+
     }
 
 }
