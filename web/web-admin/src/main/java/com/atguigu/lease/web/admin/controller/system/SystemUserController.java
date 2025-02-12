@@ -28,9 +28,9 @@ public class SystemUserController {
     @Operation(summary = "根据条件分页查询后台用户列表")
     @GetMapping("page")
     public Result<IPage<SystemUserItemVo>> page(@RequestParam long current, @RequestParam long size, SystemUserQueryVo queryVo) {
-        Page<SystemPost> page = new Page<>(current, size);
-        systemService.pageSystemUser(page,queryVo);
-        return Result.ok();
+        IPage<SystemUser> page = new Page<>(current, size);
+        IPage<SystemUserItemVo> systemUserPage = systemService.pageSystemUserByQuery(page, queryVo);
+        return Result.ok(systemUserPage);
     }
 
     @Operation(summary = "根据ID查询后台用户信息")

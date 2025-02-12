@@ -7,6 +7,7 @@ import com.atguigu.lease.web.admin.mapper.SystemUserMapper;
 import com.atguigu.lease.web.admin.service.SystemUserService;
 import com.atguigu.lease.web.admin.vo.system.user.SystemUserItemVo;
 import com.atguigu.lease.web.admin.vo.system.user.SystemUserQueryVo;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
@@ -27,21 +28,19 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     @Autowired
     private SystemPostMapper SystemPostMapper;
 
-//    根据条件分页查询后台用户列表
+    //    根据条件分页查询后台用户列表
     @Override
-    public void pageSystemUser(Page<SystemPost> page, SystemUserQueryVo queryVo) {
-        systemUserMapper.pageSystemUser(page,queryVo);
-
-
+    public IPage<SystemUserItemVo> pageSystemUserByQuery(IPage<SystemUser> page, SystemUserQueryVo queryVo) {
+        return systemUserMapper.pageSystemUserByQuery(page, queryVo);
     }
 
-//    根据ID查询后台用户信息
+    //    根据ID查询后台用户信息
     @Override
     public SystemUserItemVo getSystemUserById(Long id) {
         SystemUser systemUser = systemUserMapper.selectById(id);
         SystemPost systemPost = SystemPostMapper.selectById(systemUser.getPostId());
         SystemUserItemVo systemUserItemVo = new SystemUserItemVo();
-        BeanUtils.copyProperties(systemUser,systemUserItemVo);
+        BeanUtils.copyProperties(systemUser, systemUserItemVo);
         systemUserItemVo.setPostName(systemPost.getName());
         return systemUserItemVo;
 
