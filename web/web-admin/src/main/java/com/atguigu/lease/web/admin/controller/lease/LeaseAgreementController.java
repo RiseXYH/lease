@@ -34,7 +34,6 @@ public class LeaseAgreementController {
     }
 
     @Operation(summary = "根据条件分页查询租约列表")
-    //未实现
     @GetMapping("page")
     public Result<IPage<AgreementVo>> page(@RequestParam long current, @RequestParam long size, AgreementQueryVo queryVo) {
         IPage<AgreementVo> page = new Page<>(current, size);
