@@ -29,7 +29,8 @@ public class LoginController {
     @Operation(summary = "登录")
     @PostMapping("login")
     public Result<String> login(@RequestBody LoginVo loginVo) {
-        return Result.ok();
+        String token = loginService.login(loginVo);
+        return Result.ok(token);
     }
 
     @Operation(summary = "获取登陆用户个人信息")
