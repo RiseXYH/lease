@@ -3,6 +3,7 @@ package com.atguigu.lease.web.admin.service.impl;
 import com.atguigu.lease.common.constant.RedisConstant;
 import com.atguigu.lease.common.exception.LeaseException;
 import com.atguigu.lease.common.result.ResultCodeEnum;
+import com.atguigu.lease.common.utils.JwtUtils;
 import com.atguigu.lease.model.entity.SystemUser;
 import com.atguigu.lease.model.enums.BaseStatus;
 import com.atguigu.lease.web.admin.mapper.SystemUserMapper;
@@ -70,6 +71,6 @@ public class LoginServiceImpl implements LoginService {
             throw new LeaseException(ResultCodeEnum.ADMIN_ACCOUNT_ERROR);
         }
 
-        return null;
+        return JwtUtils.createToken(systemUser.getId(), systemUser.getUsername());
     }
 }
