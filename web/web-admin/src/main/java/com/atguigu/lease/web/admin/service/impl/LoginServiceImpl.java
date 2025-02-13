@@ -57,9 +57,11 @@ public class LoginServiceImpl implements LoginService {
             throw new LeaseException(ResultCodeEnum.ADMIN_CAPTCHA_CODE_ERROR);
         }
         //验证用户名
+        /*
         LambdaQueryWrapper<SystemUser> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(SystemUser::getUsername, loginVo.getUsername());
-        SystemUser systemUser = systemUserMapper.selectOne(queryWrapper);
+        */
+        SystemUser systemUser = systemUserMapper.selectOneByUsername(loginVo.getUsername());
         if (systemUser == null) {
             throw new LeaseException(ResultCodeEnum.ADMIN_ACCOUNT_NOT_EXIST_ERROR);
         }
