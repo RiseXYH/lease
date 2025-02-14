@@ -24,18 +24,19 @@ public class JwtUtils {
                 compact();
         return Jwt;
 
-        
     }
     //就是读取token，查有没有这个用户？然后要注意是否过期？因为return没填写jwt
     public static Claims parseToken(String token){
-
+        //`
         if (token==null){
             throw new LeaseException(ResultCodeEnum.ADMIN_LOGIN_AUTH);
         }
-
+        //解析token
         try{
             JwtParser jwtParser = Jwts.parserBuilder().setSigningKey(secretKey).build();
-            return jwtParser.parseClaimsJws(token).getBody();
+            Jws<Claims> claimsJws = jwtParser.parseClaimsJws(token);
+            //修改返回值
+            return claimsJws.getBody();
         }catch (ExpiredJwtException e){
             throw new LeaseException(ResultCodeEnum.TOKEN_EXPIRED);
         }catch (JwtException e){
