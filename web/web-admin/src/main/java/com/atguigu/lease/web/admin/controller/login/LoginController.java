@@ -1,6 +1,7 @@
 package com.atguigu.lease.web.admin.controller.login;
 
 
+import com.atguigu.lease.common.login.LoginUserHolder;
 import com.atguigu.lease.common.result.Result;
 import com.atguigu.lease.common.utils.JwtUtils;
 import com.atguigu.lease.web.admin.service.LoginService;
@@ -31,17 +32,21 @@ public class LoginController {
     @Operation(summary = "登录")
     @PostMapping("login")
     public Result<String> login(@RequestBody LoginVo loginVo) {
-        String token = loginService.login(loginVo);
-        return Result.ok(token);
+        String jwt = loginService.login(loginVo);
+        return Result.ok(jwt);
     }
 
     @Operation(summary = "获取登陆用户个人信息")
     @GetMapping("info")
-    public Result<SystemUserInfoVo> info(@RequestHeader("access-token") String token) {
+    public Result<SystemUserInfoVo> info() {
+/*
+        public Result<SystemUserInfoVo> info(@RequestHeader("access-token") String token) {
+        解析token（重复解析）
         Claims claims = JwtUtils.parseToken(token);
         Long userId = claims.get("userId", Long.class);
+*/
+        Long userId = LoginUserHolder.getLoginUser().getUserId();
         SystemUserInfoVo systemUserInfoVo = loginService.getLoginUserInfoById(userId);
         return Result.ok(systemUserInfoVo);
-
     }
 }
