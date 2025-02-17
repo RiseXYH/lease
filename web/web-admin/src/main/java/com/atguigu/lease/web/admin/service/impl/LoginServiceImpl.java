@@ -83,7 +83,7 @@ public class LoginServiceImpl implements LoginService {
         SystemUser systemUser= systemUserMapper.selectById(userId);
         SystemUserInfoVo systemUserInfoVo = new SystemUserInfoVo();
 //        user有问题
-//        SystemUserInfoVo.setName(systemUser.getName());
+        systemUserInfoVo.setName(systemUser.getName());
         systemUserInfoVo.setAvatarUrl(systemUser.getAvatarUrl());
         return systemUserInfoVo;
     }
