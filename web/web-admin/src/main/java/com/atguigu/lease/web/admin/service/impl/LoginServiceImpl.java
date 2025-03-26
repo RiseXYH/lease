@@ -32,8 +32,9 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public CaptchaVo getCaptcha() {
+        //生成验证码
         SpecCaptcha specCaptcha = new SpecCaptcha(130, 48, 4);
-
+        //获取验证码
         String code = specCaptcha.text().toLowerCase();
         String key = RedisConstant.ADMIN_LOGIN_PREFIX + UUID.randomUUID();
 

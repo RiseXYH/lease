@@ -40,6 +40,7 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
+        <!--minio图形存储-->
         <dependency>
             <groupId>io.minio</groupId>
             <artifactId>minio</artifactId>

@@ -27,14 +27,13 @@ public class FileUploadController {
 
     @Operation(summary = "上传文件")
     @PostMapping("upload")
-
-
     public Result<String> upload(@RequestParam MultipartFile file) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+        //TODO:上传文件到minio服务器
 //        try {
             String url = fileService.upload(file);
             return Result.ok(url);
-
-//        }catch (Exception e){
+//
+//        } catch (Exception e) {
 //            return Result.fail();
 //        }
     }
